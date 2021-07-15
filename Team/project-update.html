@@ -1,0 +1,78 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>追加项目费用页面</title>-->
+<!--  <meta name="renderer" content="webkit">-->
+<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+<!--  <link rel="stylesheet" href="./css/font.css">-->
+<!--  <link rel="stylesheet" href="./css/xadmin.css">-->
+<!--  <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>-->
+<!--  <script type="text/javascript" src="./js/xadmin.js"></script>-->
+<!--  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>-->
+<!--  <link rel="stylesheet" href="./lib/layui/css/layui.css"  media="all">-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div style="height: 20px;"></div>-->
+<!--<h1 style="text-align: center;">追加项目费用</h1>-->
+<!--<div style="height: 50px;"></div>-->
+<!--<div class="layui-fluid" style="text-align: center;">-->
+<!--  <div class="layui-row" >-->
+<!--    <form class="layui-form">-->
+<!--      <div class="layui-form-item">-->
+<!--        <div class="layui-inline">-->
+<!--          <div class="layui-input-inline">-->
+<!--            <input type="text" id="costed" name="costed"   class="layui-input"></div>-->
+<!--          <button type="submit" class="layui-btn" lay-submit lay-filter="update">确定</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+<!--  $(function () {-->
+<!--    layui.use('form', function () {-->
+<!--      var form = layui.form;-->
+<!--      //监听提交-->
+<!--      form.on('submit(update)', function ( ) {-->
+<!--        var costed=$("#costed").val();-->
+<!--        $.ajax({-->
+<!--          async: true,-->
+<!--          type: "POST",-->
+<!--          url: "http://121.40.41.46:8081/project/updateProCost",-->
+<!--          dataType: "json",-->
+<!--          data: JSON.stringify({-->
+<!--            "costed":costed-->
+<!--          }),-->
+<!--          contentType: "application/json",-->
+<!--          success: function (result) {-->
+<!--            if (result.executeStatus == "0") {-->
+<!--              layer.msg(result.executeMsg);-->
+<!--            } else {-->
+<!--              layer.msg(result.executeMsg);-->
+<!--              //先清除在插入-->
+<!--              layui.data('test', {-->
+<!--                key: 'name'-->
+<!--                , remove: true-->
+<!--              });-->
+<!--              //存储数据-->
+<!--              layui.data('test', {-->
+<!--                key: 'name'-->
+<!--                ,value: username-->
+<!--              });-->
+<!--              //页面跳转-->
+<!--              window.location.href = "index.html";-->
+<!--              //删除-->
+<!--              //layui.data('test', null); //删除test表-->
+<!--            }-->
+<!--          }-->
+<!--        })-->
+<!--        return false;-->
+<!--      });-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+<!--</html>-->

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>活动报告</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+
+</head>
+
+<body>
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a>
+                    <cite>活动报告</cite></a>
+            </span>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card-body ">
+                <table class="layui-table layui-form">
+                    <thead>
+                    <tr>
+                        <th width="100">序号</th>
+                        <th width="100">活动名</th>
+                        <th width="100">子项目名</th>
+                        <th width="100">查看活动详情</th>
+                    </thead>
+                    <tbody id="report">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    var uname=layui.data('test');
+    $.ajax({
+        async: true,
+        type: "POST",
+        url: "http://121.40.41.46:8081/sign/selectSign",
+        dataType: "json",
+        data: JSON.stringify({
+            "username":uname.name
+        }),
+        contentType: "application/json",
+        success: function (result) {
+            var a=result.msg;
+            var str = " ";
+            for (var index = 1; index < a.length+1; index++) {
+                str += "<tr id='"+a[index-1].pname+"'><td>" + index + "</td>";
+                str += "<td >" + a[index-1].aname + "</td>";
+                str += "<td >" + a[index-1].pname + "</td>";
+                str += "<td> <button class=\"layui-btn layui-btn-warm layui-btn-xs\"  onclick=\"c(this);xadmin.open('查看活动详情','Activity_all.html')\" ><i class=\"layui-icon\">&#xe642;</i>查看活动详情</button></td>";
+            }
+            console.log(str);
+            $("#report").html(str);
+
+        }
+    })
+    function c(obj) {
+        var name =$(obj).parents("tr").attr("id");
+        //先清除在插入
+        layui.data('Activity', {
+            key: 'name'
+            , remove: true
+        });
+        //存储数据
+        layui.data('Activity', {
+            key: 'name'
+            ,value: name
+        });
+        return false;
+    }
+</script>
+</body>
+</html>

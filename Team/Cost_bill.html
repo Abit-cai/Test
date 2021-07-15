@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>活动账单</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+</head>
+<body>
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a>
+                    <cite>活动账单</cite></a>
+            </span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <div class="layui-input-inline layui-show-xs-block">
+                        <button type="button" class="layui-btn" onclick="tableToExcel('item','bill')"><i class="layui-icon">&#xe621;</i>导出excel</button>
+                    </div>
+                </div>
+                <div class="layui-card-body ">
+                    <table id="item" class="layui-table layui-form">
+                        <thead>
+                        <tr>
+                            <th width="100">序号</th>
+                            <th width="100">项目名</th>
+                            <th width="100">总计费用</th>
+                            <th width="100">已缴费用</th>
+                        </thead>
+                        <tbody id="bill">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var uname=layui.data('test');
+    $.ajax({
+        async: true,
+        type: "POST",
+        url: "http://121.40.41.46:8081//sign/selectSign",
+        dataType: "json",
+        data: JSON.stringify({
+            "username":uname.name
+        }),
+        contentType: "application/json",
+        success: function (result) {
+            var a=result.msg;
+            var str = " ";
+            for (var index = 1; index < a.length+1; index++) {
+                str += "<tr id='" + a[index - 1].pname + "'><td>" + index + "</td>";
+                str += "<td >" + a[index - 1].pname + "</td>";
+                str += "<td>" + a[index - 1].cost + "</td>";
+                str += "<td>" + a[index-1].costed + "</td></tr>";
+            }
+            console.log(str);
+            $("#bill").html(str);
+        }
+    })
+
+    function base64 (content) {
+        return window.btoa(unescape(encodeURIComponent(content)));
+    }
+    /*
+    *@tableId: table的Id
+    *@fileName: 要生成excel文件的名字（不包括后缀，可随意填写）
+    */
+    function tableToExcel(tableID,fileName){
+        var table = document.getElementById(tableID);
+        var excelContent = table.innerHTML;
+        var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
+        excelFile += "<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>";
+        excelFile += "<body><table>";
+        excelFile += excelContent;
+        excelFile += "</table></body>";
+        excelFile += "</html>";
+        var link = "data:application/vnd.ms-excel;base64," + base64(excelFile);
+        var a = document.createElement("a");
+        a.download = fileName+".xls";
+        a.href = link;
+        a.click();
+    }
+</script>
+</body>
+</html>

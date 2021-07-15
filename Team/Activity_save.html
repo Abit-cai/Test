@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<head>
+  <meta charset="UTF-8">
+  <title>组建活动</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/xadmin.js"></script>
+  <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<script>
+    var online = layui.data('test');
+    console.log(online.name);
+    $.ajax({
+        async: true,
+        type: "POST",
+        url: "http://121.40.41.46:8081/activity/getActivity",
+        dataType: "json",
+        data: JSON.stringify({
+            "leader":online.name
+        }),
+        contentType: "application/json",
+        success: function (result) {
+            var a=result.msg;
+            var str = " ";
+            for (var index = 1; index < a.length+1; index++) {
+                str += "<tr id='"+a[index-1].name+"'><td>" + index + "</td>";
+                str += "<td >" + a[index-1].name + "</td>";
+                str += "<td>" + a[index-1].start + "</td>";
+                str += "<td>" + a[index-1].end + "</td>";
+                str +="<td class=\"td-manage\">\n" +
+                    "                  <button  class=\"layui-btn-danger layui-btn layui-btn-xs\"  id=\""+a[index-1].name+"\" onclick=\"member_del(this);\" ><i class=\"layui-icon\">&#xe640;</i>删除</button>\n" +
+                    "                  <button class=\"layui-btn layui-btn-warm layui-btn-xs\"  onclick=\"oo(this);xadmin.open('查看','Project_save.html')\" ><i class=\"layui-icon\">&#xe642;</i>查看子项目</button>\n" +
+                    "              </td></tr>";
+            }
+            console.log(str);
+            $("#Activity_save").html(str);
+        }
+    })
+    /*用户-删除*/
+    function member_del(obj){
+            var name =$(obj).parents("tr").attr("id");
+            //console.log(name);
+            //发异步删除数据
+            $.ajax({
+                async: true,
+                type: "POST",
+                url: "http://121.40.41.46:8081/activity/deleteActivity",
+                dataType: "json",
+                data: JSON.stringify({
+                    "name":name
+                }),
+                contentType: "application/json",
+                success: function (result) {
+                    if (result.executeStatus == "0") {
+                        layer.msg(result.executeMsg);
+                    } else {
+                        layer.msg(result.executeMsg);
+                        $(obj).parents("tr").remove();
+                    }
+                }
+        });
+    }
+    function oo(obj) {
+        var name =$(obj).parents("tr").attr("id");
+        //先清除在插入
+        layui.data('act', {
+            key: 'name'
+            , remove: true
+        });
+        //存储数据
+        layui.data('act', {
+            key: 'name'
+            ,value: name
+        });
+        // var localTest = layui.data('act');
+        // console.log(localTest.name); //获得“ABC”
+        return false;
+    }
+    layui.use('table', function(){
+        var table = layui.table;
+
+    })
+</script>
+<body>
+<div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a>
+                    <cite>组建活动</cite></a>
+            </span>
+</div>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-body ">
+          <div class="layui-input-inline layui-show-xs-block">
+            <button type="button" class="layui-btn" onclick="xadmin.open('创建活动','Activity_add.html')"><i class="layui-icon"></i>创建活动</button>
+            <button type="button" class="layui-btn" onclick="xadmin.open('添加子项目','Project_add.html')"><i class="layui-icon"></i>添加子项目</button>
+          </div>
+        </div>
+        <div class="layui-card-body ">
+                <table class="layui-table layui-form">
+                    <thead>
+                    <tr>
+                        <th width="100">序号</th>
+                        <th width="100">活动名</th>
+                        <th width="100">开始时间</th>
+                        <th width="100">结束时间</th>
+                        <th width="200">操作</th></tr>
+                    </thead>
+                    <tbody id="Activity_save">
+
+                    </tbody>
+                </table>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

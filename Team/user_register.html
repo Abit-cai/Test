@@ -1,0 +1,76 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+	<meta charset="UTF-8">
+	<title>拼团活动注册</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/login.css">
+	  <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    
+</head>
+<body class="login-bg">
+    
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">拼团活动注册页面</div>
+        <div id="darkbannerwrap"></div>
+        
+        <form method="post" class="layui-form" >
+            <input name="userLoginName" placeholder="用户名"  type="text" lay-verify="required"
+                   class="layui-input" id="username" name="username">
+            <hr class="hr15">
+            <input name="userPassword" lay-verify="required" placeholder="用户密码"  type="password"
+                   class="layui-input" id="password" name="password">
+            <hr class="hr15">
+            <input name="userEmail" placeholder="绑定邮箱"  type="text" lay-verify="required"
+                   class="layui-input" id="mail" name="mail">
+            <hr class="hr15">
+            
+            <input value="注册" lay-submit lay-filter="register" style="width:100%;" type="submit">
+            <hr class="hr20" >
+        </form>
+    </div>
+
+    <script>
+        $(function () {
+            layui.use('form', function(){
+              var form = layui.form;
+              //监听提交
+              form.on('submit(register)', function( ){
+                //console.warn(data.field);
+                  var username=$("#username").val();
+                  var password=$("#password").val();
+                  var mail=$("#mail").val();
+                $.ajax({
+                  async: true,
+                  type: "POST",
+                  url: "http://121.40.41.46:8081/user/register",
+                  dataType: "json",
+                  data: JSON.stringify({
+                      "username":username,
+                      "password":password,
+                      "mail":mail
+                  }),
+                  contentType: "application/json",
+                  success:function(result){
+                    if(result.executeStatus=="0"){
+                      layer.msg(result.executeMsg);
+                    }else{
+                      layer.msg(result.executeMsg);
+                      //页面跳转
+                      window.location.href = "user_login.html";
+                    }
+                  }
+                })
+                return false;
+              });
+            });
+        })
+    </script>
+</body>
+</html>
