@@ -7,14 +7,11 @@ import com.example.demo.pojo.Sign;
 import com.example.demo.sign.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
 
 @RestController
 @RequestMapping("sign")
@@ -22,6 +19,9 @@ public class SignController {
     @Autowired
     private SignService signService;
     //private CostService costService;
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/saveSign", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String saveSign(@RequestBody Sign sign) {
         ReturnMessage returnMessage = new ReturnMessage();
@@ -37,8 +37,11 @@ public class SignController {
         returnMessage.setExecuteMsg("恭喜你，成功报名！");
         return JSONObject.toJSONString(returnMessage);
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/selectSign", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String selectSignByName(@RequestBody String JSON_username){
+    public String selectSignByUname(@RequestBody String JSON_username){
         JSONObject param = JSONObject.parseObject(JSON_username);
         String username = param.getString("username");
         List<Sign> signList = signService.selectByUname(username);
@@ -46,8 +49,11 @@ public class SignController {
         JSONArray jsonArray = new JSONArray();
         for (int i=0;i<signList.size();i++) {
             JSONObject obj = new JSONObject();
+            obj.put("username", signList.get(i).getUsername());
             obj.put("aname", signList.get(i).getAname());
             obj.put("pname", signList.get(i).getPname());
+            obj.put("cost", signList.get(i).getCost());
+            obj.put("costed", signList.get(i).getCosted());
             obj.put("ended", signList.get(i).getEnded());
             jsonArray.add(obj);
         }
@@ -55,6 +61,9 @@ public class SignController {
         //System.out.println(jsonArray);
         return result.toJSONString();
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/updateEnded", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateEndedByPname(@RequestBody String JSON_pname){
         ReturnMessage returnMessage = new ReturnMessage();

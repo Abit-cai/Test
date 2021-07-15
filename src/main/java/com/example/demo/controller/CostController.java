@@ -1,16 +1,12 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.pojo.Cost;
 import com.example.demo.pojo.ReturnMessage;
-import com.example.demo.pojo.Sign;
 import com.example.demo.sign.SignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("cost")
@@ -18,6 +14,8 @@ public class CostController {
     @Autowired
     private SignService signService;
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/updateCost", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateCostByPname(@RequestBody String JSON_pname){
         ReturnMessage returnMessage = new ReturnMessage();
@@ -35,6 +33,9 @@ public class CostController {
         returnMessage.setExecuteMsg("恭喜你，成功追加费用！");
         return JSONObject.toJSONString(returnMessage);
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/updateCosted", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateCostedByPname(@RequestBody String JSON_pname){
         ReturnMessage returnMessage = new ReturnMessage();

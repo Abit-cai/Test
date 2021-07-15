@@ -7,10 +7,8 @@ import com.example.demo.pojo.Project;
 import com.example.demo.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,8 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/saveProject", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String saveProject(@RequestBody Project project) {
         ReturnMessage returnMessage = new ReturnMessage();
@@ -35,6 +35,8 @@ public class ProjectController {
         return JSONObject.toJSONString(returnMessage);
     }
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/selectProject", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String selectProjectByName(@RequestBody String JSON_name){
         JSONObject param = JSONObject.parseObject(JSON_name);
@@ -55,6 +57,8 @@ public class ProjectController {
         return result.toJSONString();
     }
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/selectPnameTime", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String selectPnameTimeByLeader(@RequestBody String JSON_leader){
         JSONObject param = JSONObject.parseObject(JSON_leader);
@@ -73,6 +77,8 @@ public class ProjectController {
         return result.toJSONString();
     }
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/updateProCost", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String updateProCostByPname(@RequestBody String JSON_pname){
         ReturnMessage returnMessage = new ReturnMessage();

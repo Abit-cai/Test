@@ -7,10 +7,9 @@ import com.example.demo.activity.ActivityService;
 import com.example.demo.pojo.ReturnMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,6 +18,8 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value="/saveActivity",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String saveActivity(@RequestBody Activity activity){
         ReturnMessage returnMessage=new ReturnMessage();
@@ -34,6 +35,8 @@ public class ActivityController {
         return JSONObject.toJSONString(returnMessage);
     }
 
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/deleteActivity", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteActivity(@RequestBody String JSON_name){
         //一样的 需要转化为json再获取name
@@ -52,6 +55,9 @@ public class ActivityController {
         returnMessage.setExecuteMsg("恭喜你，成功删除活动！");
         return JSONObject.toJSONString(returnMessage);
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/selectActivity", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String selectAllActivity(){
         //这个函数是因为没有返回值 因为你是void
@@ -69,6 +75,9 @@ public class ActivityController {
         //System.out.println(result);
         return result.toJSONString();
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/getActivity", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getActivity(@RequestBody String JSON_name){
         //你传过去的是json 而不是String 你需要转化为json再获取name

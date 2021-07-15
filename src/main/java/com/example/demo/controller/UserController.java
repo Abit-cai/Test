@@ -6,6 +6,7 @@ import com.example.demo.pojo.User;
 import com.example.demo.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    @Transactional
     @CrossOrigin
     @RequestMapping(value="/login",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody User user){
@@ -37,6 +38,9 @@ public class UserController {
         }
         return JSONObject.toJSONString(returnMessage);
     }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value="/register",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String register(@RequestBody User user){
         ReturnMessage returnMessage=new ReturnMessage();
