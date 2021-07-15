@@ -46,11 +46,11 @@ public class CostController {
             signService.updateCostedByPname(pname,costed);
         } catch (Exception e) {
             returnMessage.setExecuteStatus("0");
-            returnMessage.setExecuteMsg("很遗憾，追加费用失败！");
+            returnMessage.setExecuteMsg("很遗憾，缴费失败！");
             return JSONObject.toJSONString(returnMessage);
         }
         returnMessage.setExecuteStatus("1");
-        returnMessage.setExecuteMsg("恭喜你，成功追加费用！");
+        returnMessage.setExecuteMsg("恭喜你，成功缴费！");
         return JSONObject.toJSONString(returnMessage);
     }
 }
