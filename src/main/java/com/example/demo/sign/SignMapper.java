@@ -9,6 +9,7 @@ import java.util.List;
 public interface SignMapper {
 	int insert(Sign sign);//报名
     List<Sign> selectByUname(String username);
+    List<Sign> selectByPname(String pname);
     void updateEndedByPname(String pname);//活动情况改变
     int selectEndedByPname(String pname);
     void updateCostByPname(String pname,int cost);//追加

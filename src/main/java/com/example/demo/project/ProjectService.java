@@ -16,6 +16,9 @@ public class ProjectService {
     public List<Project> selectProjectByName(String name){
         return projectMapper.selectProjectByName(name);
     }
+    public List<Project> selectProjectByPname(String pname){
+        return projectMapper.selectProjectByPname(pname);
+    }
     public List<Project> selectPnameTimeByLeader(String leader){
         return projectMapper.selectPnameTimeByLeader(leader);
     }

@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProjectMapper {
     int insertProject(Project project);
     List<Project> selectProjectByName(String name);
+    List<Project> selectProjectByPname(String pname);
     List<Project> selectPnameTimeByLeader(String leader);
     void  updateProCostByPname(String pname,int cost);
 }

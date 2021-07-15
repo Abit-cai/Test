@@ -12,6 +12,10 @@
     <select id="selectByUname" resultType="com.example.demo.pojo.Sign" parameterType="string">
         select * from sign where username=#{username}
     </select>
+
+	<select id="selectByPname" resultType="com.example.demo.pojo.Sign" parameterType="string">
+		select * from sign where pname=#{pname}
+	</select>
     <!-- 活动情况改变-->
     <update id="updateEndedByPname" parameterType="String">
 		 update sign set ended=1  where pname = #{pname}

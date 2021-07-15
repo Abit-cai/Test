@@ -17,6 +17,9 @@ public class SignService {
 	public List<Sign> selectByUname(String username){
 		return signMapper.selectByUname(username);
 	}
+	public List<Sign> selectByPname(String pname){
+		return signMapper.selectByPname(pname);
+	}
 	public void updateEndedByPname(String pname){//活动情况改变
 		signMapper.updateEndedByPname(pname);
 	}

@@ -11,6 +11,10 @@
         select * from project where name=#{name}
 
     </select>
+    <select id="selectProjectByPname" resultType="com.example.demo.pojo.Project" parameterType="string">
+        select * from project where pname=#{pname}
+
+    </select>
 <!--    可能会出错-->
     <select id="selectPnameTimeByLeader" resultType="com.example.demo.pojo.Project" parameterType="string">
         select pname,time

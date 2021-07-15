@@ -61,6 +61,24 @@ public class SignController {
         //System.out.println(jsonArray);
         return result.toJSONString();
     }
+    @Transactional
+    @CrossOrigin
+    @RequestMapping(value = "/selectUnameByPname", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String selectUnameByPname(@RequestBody String JSON_pname){
+        JSONObject param = JSONObject.parseObject(JSON_pname);
+        String pname = param.getString("pname");
+        List<Sign> signList = signService.selectByPname(pname);
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (int i=0;i<signList.size();i++) {
+            JSONObject obj = new JSONObject();
+            obj.put("username", signList.get(i).getUsername());
+            jsonArray.add(obj);
+        }
+        result.put("msg",jsonArray);
+        //System.out.println(jsonArray);
+        return result.toJSONString();
+    }
 
     @Transactional
     @CrossOrigin

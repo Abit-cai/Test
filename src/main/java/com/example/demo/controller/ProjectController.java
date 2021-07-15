@@ -60,6 +60,26 @@ public class ProjectController {
 
     @Transactional
     @CrossOrigin
+    @RequestMapping(value = "/selectProByPname", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String selectProjectByPname(@RequestBody String JSON_pname){
+        JSONObject param = JSONObject.parseObject(JSON_pname);
+        String pname = param.getString("pname");
+        List<Project> projectList = projectService.selectProjectByPname(pname);
+        JSONObject result = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (int i=0;i<projectList.size();i++) {
+            JSONObject obj = new JSONObject();
+            obj.put("time", projectList.get(i).getTime());
+            obj.put("site",projectList.get(i).getSite());
+            jsonArray.add(obj);
+        }
+        result.put("msg",jsonArray);
+        //System.out.println(jsonArray);
+        return result.toJSONString();
+    }
+
+    @Transactional
+    @CrossOrigin
     @RequestMapping(value = "/selectPnameTime", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public String selectPnameTimeByLeader(@RequestBody String JSON_leader){
         JSONObject param = JSONObject.parseObject(JSON_leader);
