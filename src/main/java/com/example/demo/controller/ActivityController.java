@@ -67,6 +67,7 @@ public class ActivityController {
         for (int i=0;i<activityList.size();i++) {
             JSONObject obj = new JSONObject();
             obj.put("name", activityList.get(i).getName());
+            obj.put("leader", activityList.get(i).getLeader());
             obj.put("start", activityList.get(i).getStart());
             obj.put("end",activityList.get(i).getEnd());
             jsonArray.add(obj);
@@ -79,11 +80,11 @@ public class ActivityController {
     @Transactional
     @CrossOrigin
     @RequestMapping(value = "/getActivity", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getActivity(@RequestBody String JSON_name){
+    public String getActivity(@RequestBody String JSON_leader){
         //你传过去的是json 而不是String 你需要转化为json再获取name
-        JSONObject param = JSONObject.parseObject(JSON_name);
-        String name = param.getString("name");
-        List<Activity> activityList = activityService.getActivityByName(name);
+        JSONObject param = JSONObject.parseObject(JSON_leader);
+        String leader = param.getString("leader");
+        List<Activity> activityList = activityService.getActivityByLeader(leader);
         JSONObject result = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (int i=0;i<activityList.size();i++) {

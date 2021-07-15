@@ -50,6 +50,7 @@ public class ProjectController {
             obj.put("pname", projectList.get(i).getPname());
             obj.put("time", projectList.get(i).getTime());
             obj.put("site",projectList.get(i).getSite());
+            obj.put("cost",projectList.get(i).getCost());
             jsonArray.add(obj);
         }
         result.put("msg",jsonArray);

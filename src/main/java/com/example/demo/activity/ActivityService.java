@@ -20,7 +20,7 @@ public class ActivityService {
     public List<Activity>getAllActivity(){
         return activityMapper.getAllActivity();
     }
-    public List<Activity> getActivityByName(String name){
-        return activityMapper.getActivityByName(name);
+    public List<Activity> getActivityByLeader(String leader){
+        return activityMapper.getActivityByLeader(leader);
     }
 }

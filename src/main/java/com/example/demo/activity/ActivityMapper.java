@@ -10,5 +10,5 @@ public interface ActivityMapper {
     public int insertActivity(Activity activity);
     public void deleteActivity(String name);
     public List<Activity> getAllActivity();
-    public List<Activity> getActivityByName(String name);
+    public List<Activity> getActivityByLeader(String leader);
 }
