@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.activity.ActivityMapper">
+
+    <insert id="insertActivity" parameterType="com.example.demo.pojo.Activity">
+        insert into activity(name,leader,start,end) values(#{name},#{leader},#{start},#{end})
+    </insert>
+
+    <delete id="deleteActivity"  parameterType="string">
+        delete from activity where name=#{name}
+    </delete>
+
+    <select id="getAllActivity" resultType="com.example.demo.pojo.Activity">
+        select name,start,end from activity
+    </select>
+
+    <select id="getActivityByName" parameterType="string" resultType="com.example.demo.pojo.Activity">
+        select * from activity where name=#{name}
+    </select>
+
+</mapper>

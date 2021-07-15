@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.project.ProjectMapper">
+
+    <insert id="insertProject" parameterType="com.example.demo.pojo.Project">
+        insert into project(name,pname,time,site,cost) values(#{name},#{pname},#{time},#{site},#{cost})
+    </insert>
+
+    <select id="selectProjectByName" resultType="com.example.demo.pojo.Project" parameterType="string">
+        select * from project where name=#{name}
+
+    </select>
+<!--    可能会出错-->
+    <select id="selectPnameTimeByLeader" resultType="com.example.demo.pojo.Project" parameterType="string">
+        select pname,time
+        from project
+        where name in(select name
+                        from activity
+                        where leader=#{leader})
+
+    </select>
+
+<!--    <update id="updateProCostByPname" parameterType="String">-->
+<!--        update project-->
+<!--        set cost=cost+#{cost}-->
+<!--        where pname=#{pname}-->
+<!--    </update>-->
+    <update id="updateProCostByPname" >
+        update project set cost = #{cost}+cost
+        where pname=#{pname}
+    </update>
+</mapper>

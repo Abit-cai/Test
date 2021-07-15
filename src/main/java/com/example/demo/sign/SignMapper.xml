@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.sign.SignMapper">
+	<!--    插入-->
+	<insert id="insert" parameterType="com.example.demo.pojo.Sign"  >
+	    insert into sign (username,aname,pname,ended)
+	    values ( #{username}, #{aname},#{pname},0)
+	</insert>
+    <!--    查找-->
+    <select id="selectByUname" resultType="com.example.demo.pojo.Sign" parameterType="string">
+        select * from sign where username=#{username}
+    </select>
+    <!-- 活动情况改变-->
+    <update id="updateEndedByPname" parameterType="String">
+		 update sign set ended=1  where pname = #{pname}
+	</update>
+	<!--	查找活动状态-->
+    <select id="selectEndedByPname" parameterType="String" resultType="int">
+		select ended from sign where pname=#{pname}
+	</select>
+	<!-- 追加-->
+	<update id="updateCostByPname" >
+		update sign set cost = #{cost} + cost where pname = #{pname};
+	</update>
+	<!--    缴费-->
+	<update id="updateCostedByPname"  >
+		update sign set costed = #{costed} + costed where pname = #{pname};
+	</update>
+</mapper>
